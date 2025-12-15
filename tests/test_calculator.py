@@ -3,8 +3,8 @@ Test suite for the Calculator class.
 """
 
 import pytest
-import sys
 from calculator.calculator import Calculator, InvalidInputException
+
 
 def calc():
     return Calculator()
@@ -161,6 +161,7 @@ class TestDivision:
 
         # Assert
         assert result == expected
+
     def test_divide_by_zero_should_raise_error(self):
         """0で割ろうとしたらValueErrorになるべき"""
         calc = Calculator()
@@ -170,7 +171,6 @@ class TestDivision:
 
 
 class TestInputValidation:
-
     def test_too_large_value_should_raise_exception(self):
         calc = Calculator()
         with pytest.raises(InvalidInputException):
@@ -184,49 +184,47 @@ class TestInputValidation:
     def test_boundary_min_value_should_be_valid(self):
         """最小値ちょうど(-1,000,000)は有効な入力であるべき"""
         calc = Calculator()
-        
+
         assert calc.add(-1_000_000, 0) == -1_000_000
 
     def test_boundary_max_value_should_be_valid(self):
         """最大値ちょうど(1,000,000)は有効な入力であるべき"""
         calc = Calculator()
-        
+
         assert calc.add(1_000_000, 0) == 1_000_000
-    
+
     def test_too_large_value_should_raise_exception_with_message(self):
         calc = Calculator()
-        
+
         with pytest.raises(InvalidInputException) as exc_info:
             calc.add(1_000_001, 10)
-        
-        
+
         assert "Invalid input" in str(exc_info.value)
 
     def test_too_small_value_should_raise_exception_with_message(self):
         calc = Calculator()
         with pytest.raises(InvalidInputException) as exc_info:
             calc.add(-1_000_001, 10)
-            
+
         assert "Invalid input" in str(exc_info.value)
 
     def test_boundary_min_value_for_b_should_be_valid(self):
         """2つ目の引数が最小値ちょうど(-1,000,000)でも有効であるべき"""
         calc = Calculator()
-        
+
         assert calc.add(0, -1_000_000) == -1_000_000
 
     def test_boundary_max_value_for_b_should_be_valid(self):
         """2つ目の引数が最大値ちょうど(1,000,000)でも有効であるべき"""
         calc = Calculator()
-        
+
         assert calc.add(0, 1_000_000) == 1_000_000
 
     def test_invalid_b_value_should_raise_exception_with_message(self):
         """2つ目の引数が無効な場合、適切なメッセージが出るべき"""
         calc = Calculator()
-        
+
         with pytest.raises(InvalidInputException) as exc_info:
             calc.add(0, 1_000_001)
-        
+
         assert "Invalid input" in str(exc_info.value)
-    
