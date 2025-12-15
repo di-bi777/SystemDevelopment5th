@@ -6,7 +6,7 @@ jobs:
   lint-and-format:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       
     steps:
       - name: Checkout code
@@ -20,8 +20,13 @@ jobs:
       - name: Install Ruff
         run: pip install ruff==0.4.4
 
-      - name: Run linter check (suggestions only, no modifications)
-        run: ruff check .
+      - name: Run linter check (auto-fix)
+        run: ruff check --fix .
 
-      - name: Run formatter check (error if formatting needed)
-        run: ruff format --check .
+      - name: Run formatter (auto-fix)
+        run: ruff format .
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
