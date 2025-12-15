@@ -3,6 +3,7 @@ Test suite for the Calculator class.
 """
 
 import pytest
+import sys
 from calculator.calculator import Calculator, InvalidInputException
 
 def calc():
